@@ -7,6 +7,20 @@ import { Card } from "./Card";
 function App() {
   const [imgDataArray, setImgDataArray] = useState([]);
   const [imageCardSet ,setImageCardSet] = useState([])
+
+function getRandomIndex() {
+  return Math.floor(Math.random() * 10)
+}
+
+  function getImageOrder() {
+    const order = []
+    while(order.length !== 10) {
+      const index = getRandomIndex()
+      if (order.includes(index)) continue
+      order.push(index)
+    }
+    return order
+  }
   
    useEffect(() => {
     async function getRickAndMortyData() {
