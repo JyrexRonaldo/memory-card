@@ -1,8 +1,8 @@
-function Card({imgUrl, imgName}) {
+function Card({imgUrl, imgName, clickHandler}) {
     return (
-        <div>
-        <img src={imgUrl} alt="" />
-        <p>{imgName}</p>
+        <div data-id={imgName} onClick={clickHandler}>
+        <img data-id={imgName} src={imgUrl} alt="" />
+        <p data-id={imgName}>{imgName}</p>
         </div>
     )
 }

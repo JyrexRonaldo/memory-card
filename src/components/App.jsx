@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import "../styles/App.css";
 import { Card } from "./Card";
 
 function App() {
-  // const [imgDataArray, setImgDataArray] = useState([]);
-  // const [imageCardSet, setImageCardSet] = useState([]);
-  // const [trigger, setTrigger] = useState(0);
   const results = useData("https://rickandmortyapi.com/api/character");
+  const [nameArray, setNameArray] = useState([])
 
-  console.log(results)
+  console.log(results);
 
   function useData(url) {
     const [data, setData] = useState(null);
@@ -20,13 +16,12 @@ function App() {
         .then((response) => response.json())
         .then((json) => {
           if (!ignore) {
-
-            let dataArray = []
+            let dataArray = [];
             for (let i = 0; i < 10; i++) {
               dataArray.push({
                 name: json.results[i].name,
                 image: json.results[i].image,
-              });           
+              });
             }
             setData(dataArray);
           }
@@ -54,64 +49,33 @@ function App() {
 
   function getShuffledCards(dataArray) {
     if (dataArray === null) {
-      return
+      return;
     }
     const cardSet = [];
     const order = getImageOrder();
     for (let i = 0; i < dataArray.length; i++) {
-      // cardSet[order[i]] = dataArray[i]getShuffledCards
       cardSet[order[i]] = (
         <Card
           key={dataArray[i].name}
           imgUrl={dataArray[i].image}
           imgName={dataArray[i].name}
+          clickHandler={hancleClick}
         />
       );
     }
-
     return cardSet;
   }
 
-  // function getRandomIndex() {
-  //   return Math.floor(Math.random() * 10)
-  // }
+  let shuffledCards = getShuffledCards(results)
 
-  //   function getImageOrder() {
-  //     const order = []
-  //     while(order.length !== 10) {
-  //       const index = getRandomIndex()
-  //       if (order.includes(index)) continue
-  //       order.push(index)
-  //     }
-  //     return order
-  //   }
+  function hancleClick(e) {
+    console.log(e.target.dataset.id)
+    const tempArray = [...nameArray, e.target.dataset.id]
+    console.log(tempArray)
+    setNameArray(tempArray)
+    shuffledCards = getShuffledCards(results)
 
-  //  useEffect(() => {
-  //   async function getRickAndMortyData() {
-  //     const dataArray = [];
-  //     const response = await fetch("https://rickandmortyapi.com/api/character");
-  //     const data = await response.json();
-  //     for (let i = 0; i < 10; i++) {
-  //       dataArray.push({
-  //         name: data.results[i].name,
-  //         image: data.results[i].image,
-  //       });
-  //     }
-  //     console.log("Yuh")
-  //     // setImgDataArray(dataArray);
-  //     const cardSet = imgDataArray.map((data) => (
-  //       <Card key={data.name} imgUrl={data.image} imgName={data.name} />
-  //     ));
-  //     setImageCardSet(cardSet)
-  //   }
-  //   getRickAndMortyData();
-  // }, [imgDataArray]);
-
-  // const imageCardSet = imgDataArray.map((data) => (
-  //   <Card key={data.name} imgUrl={data.image} imgName={data.name} />
-  // ));
-
-  // console.log(imageCardSet);
+  }
 
   return (
     <>
@@ -122,7 +86,7 @@ function App() {
       </p>
       <p>Score:</p>
       <p>Best Score</p>
-      <div className="cardSet">{getShuffledCards(results)}</div>
+      <div className="cardSet">{shuffledCards}</div>
     </>
   );
 }
