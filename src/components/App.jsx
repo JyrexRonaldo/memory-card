@@ -5,8 +5,9 @@ import { Card } from "./Card";
 function App() {
   const results = useData("https://rickandmortyapi.com/api/character");
   const [nameArray, setNameArray] = useState([])
+  const [bestScore, setBestScore] = useState(0)
 
-  console.log(results);
+  // console.log(results);
 
   function useData(url) {
     const [data, setData] = useState(null);
@@ -67,15 +68,34 @@ function App() {
   }
 
   let shuffledCards = getShuffledCards(results)
+  let score = nameArray.length
+  // let bestScore = 0
+
+  // function getScores (array) {
+    
+  // }
 
   function hancleClick(e) {
     console.log(e.target.dataset.id)
     const tempArray = [...nameArray, e.target.dataset.id]
-    console.log(tempArray)
+    // console.log(tempArray)
     setNameArray(tempArray)
+
+    if (nameArray.includes(e.target.dataset.id)) {
+      if (bestScore < score) {
+        setBestScore(score)
+      }
+      score = 0
+      setNameArray([]) 
+    }
+
     shuffledCards = getShuffledCards(results)
 
   }
+
+  
+
+
 
   return (
     <>
@@ -84,8 +104,8 @@ function App() {
         Remember the order in which you click your card, repeating a click on a
         card resets score
       </p>
-      <p>Score:</p>
-      <p>Best Score</p>
+      <p>Score: {score}</p>
+      <p>Best Score: {bestScore}</p>
       <div className="cardSet">{shuffledCards}</div>
     </>
   );
