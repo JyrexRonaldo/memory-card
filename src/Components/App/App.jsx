@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import "../styles/App.css";
-import { Card } from "./Card";
+import styles from "./App.module.css";
+import Card from "../Card/Card.jsx";
 
 function App() {
   const results = useData("https://rickandmortyapi.com/api/character");
   const [nameArray, setNameArray] = useState([])
   const [bestScore, setBestScore] = useState(0)
-
-  // console.log(results);
 
   function useData(url) {
     const [data, setData] = useState(null);
@@ -69,16 +67,9 @@ function App() {
 
   let shuffledCards = getShuffledCards(results)
   let score = nameArray.length
-  // let bestScore = 0
-
-  // function getScores (array) {
-    
-  // }
 
   function hancleClick(e) {
-    console.log(e.target.dataset.id)
     const tempArray = [...nameArray, e.target.dataset.id]
-    // console.log(tempArray)
     setNameArray(tempArray)
 
     if (nameArray.includes(e.target.dataset.id)) {
@@ -88,17 +79,12 @@ function App() {
       score = 0
       setNameArray([]) 
     }
-
     shuffledCards = getShuffledCards(results)
-
   }
-
-  
-
 
 
   return (
-    <>
+    <div className={styles.app}>
       <h1>Memory Card Game</h1>
       <p>
         Remember the order in which you click your card, repeating a click on a
@@ -106,8 +92,8 @@ function App() {
       </p>
       <p>Score: {score}</p>
       <p>Best Score: {bestScore}</p>
-      <div className="cardSet">{shuffledCards}</div>
-    </>
+      <div className={styles.cardSet}>{shuffledCards}</div>
+    </div>
   );
 }
 

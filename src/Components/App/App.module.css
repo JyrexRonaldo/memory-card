@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -31,21 +31,22 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
+} */
 
-.card {
+/* .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-}
+} */
 
 .cardSet {
-
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  width: 70%;
+  justify-content: center;
 }
 
 .cardSet > div {
@@ -56,4 +57,10 @@
 .cardSet  img {
   width: 200px;
   height: auto;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
